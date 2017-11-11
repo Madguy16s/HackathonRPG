@@ -1,0 +1,55 @@
+
+import com.jme3.app.SimpleApplication;
+import com.jme3.material.Material;
+import com.jme3.math.Vector3f;
+import com.jme3.scene.Geometry;
+import com.jme3.scene.shape.Box;
+import com.jme3.math.ColorRGBA;
+import com.jme3.input.KeyInput;
+import com.jme3.input.MouseInput;
+import com.jme3.input.controls.ActionListener;
+import com.jme3.input.controls.AnalogListener;
+import com.jme3.input.controls.KeyTrigger;
+import com.jme3.input.controls.MouseButtonTrigger;
+
+import javax.swing.*;
+import java.time.Clock;
+
+public class Main extends SimpleApplication {
+
+    public static void main(String[] args){
+        Main app = new Main();
+        app.start();
+    }
+    protected Geometry player;
+    Boolean isRunning = true;
+
+    @Override
+    public void simpleInitApp(){
+        Box b = new Box(1, 1, 1);
+        player = new Geometry("Player", b);
+        Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+        mat.setColor("Color", ColorRGBA.Blue);
+        player.setMaterial(mat);
+        rootNode.attachChild(player);
+        initKeys(); // load my custom keybinding
+        //todo do the scene implementation
+    }
+    private void initKeys() {
+        inputManager.addMapping("yes", new KeyTrigger(KeyInput.KEY_Y));
+        inputManager.addMapping("no", new KeyTrigger(KeyInput.KEY_N));
+        inputManager.addListener(actionListener,"yes");
+        inputManager.addListener(actionListener,"no");
+    }
+    private ActionListener actionListener = (name, keyPressed, tpf) -> {
+            if (name.equals("yes") && !keyPressed){
+                System.out.println("you picked Yes");
+                //todo logic
+            }
+            if (name.equals("no") && !keyPressed){
+                System.out.println("you picked no");
+                //todo logic
+            }
+        };
+}
+
